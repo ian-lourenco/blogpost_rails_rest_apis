@@ -426,6 +426,8 @@ Through our small example, we've seen how Rails API mode provides:
 
 The next time you need to build an API, ask yourself: "Would I enjoy rebuilding Rails' features from scratch?" If the answer is no (and it usually is), Rails API mode may probably be a good idea.
 
+___
+Photo by <a href="https://unsplash.com/pt-br/@trapnation?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Andre Benz</a> on <a href="https://unsplash.com/pt-br/fotografias/fotografia-de-ferrovia-durante-a-noite-JnB8Gio4GZo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 ---
 
 #### Previously: [Web Development with Ruby on Rails](https://blog.codeminer42.com/web-development-with-ruby-on-rails/)
