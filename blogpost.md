@@ -313,7 +313,7 @@ Given we will mainly use JSON, what does it look like on a typical GET call on t
 ```
 Pretty cool, all working just fine! But wait... I don't remember setting up this format of return or even the info I want to display. Well... Rails automatically gets the instance variable we created `miners` and serializes the data into an organized JSON with all their information, which is good. But what if we want to display only the names and levels? And what if we wanted to show the rare gems they have? Here we can use [JBuilder](https://github.com/rails/jbuilder) gem to serialize what we want! It is an official gem maintained by the Rails team!
 
-JBuilder’s domain-specific language (DSL) uses Ruby code to construct JSON. Every `json.key value` declaration that we will use (you see below) explicitly defines your API’s output structure, it can be simple attributes (`json.level miner.level`), complex nested relationships (like the `rare_gems` association), or even computed values like the following examples:
+JBuilder’s domain-specific language (DSL) uses Ruby code to construct JSON. Every `json.key value` declaration (like you'll see below) explicitly defines your API's output structure, it can be simple attributes (`json.level miner.level`), complex nested relationships (like the `rare_gems` association), or even computed values, as shown in these examples:
 ```rb
 json.miner do
   json.name @miner.name
@@ -435,7 +435,7 @@ In their controller actions:
 ```
 See that I included the rare gems on the call? Well, the JSON view will iterate each Miner on @miners and that could cause some serious N+1 Query issues, so always bear that in mind!
 
-Of course, this is a straightforward use, it can be much more complex and useful if you want and need! Just like ERB templates for HTML, JBuilder supports partials and layouts to keep your JSON views DRYer. You can extract shared structures (for example, a miner’s base attributes) into `_miner.json.jbuilder` partials, then reuse them with `json.partial!` across endpoints, just as you’d render partials in traditional Rails views. This is indeed really convenient for maintaining consistency across index/show endpoints or versioned APIs. Combined with Rails’ conventional file lookup (automagically using `show.json.jbuilder` for `GET /miners/1`), you get a clean separation of concerns without sacrificing flexibility.
+Of course, this is a straightforward use; it can be much more complex and useful if you want and need it. Just like ERB templates for HTML, JBuilder supports partials and layouts to keep your JSON views DRYer. You can extract shared structures (for example, a miner’s base attributes) into `_miner.json.jbuilder` partials, then reuse them with `json.partial!` across endpoints, just as you’d render partials in traditional Rails views. This is indeed really convenient for maintaining consistency across index/show endpoints or versioned APIs. Combined with Rails’ conventional file lookup (automagically using `show.json.jbuilder` for `GET /miners/1`), you get a clean separation of concerns without sacrificing flexibility.
 
 Now that we have this new tool in our toobox let's improve our views!
 
