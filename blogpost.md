@@ -37,8 +37,8 @@ Even though it all seems _too much_, a simple way of thinking is "Why _NOT_?", y
 > The short version is: that you may not have thought about which
 > parts of Rails are still applicable even if you remove the
 > view layer, but the answer turns out to be most of it.
-&gt;
-&gt;<cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
+>
+><cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
 
 ### Differences between RoR and RoR --api
 There are three main differences between creating a common RoR app and a RoR app on API mode, as described in the Rails Guides:
