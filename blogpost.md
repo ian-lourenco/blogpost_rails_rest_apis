@@ -1,36 +1,32 @@
-## Creating REST APIs with Ruby on Rails
-#### Easy and fast developing with RoR and JBuilder!
-
 ### Introduction
-You've likely seen this old and famous [demo presentation](https://www.youtube.com/watch?v=Gzj723LkRJY) on how powerful and easy it is to build an app with Ruby on Rails, as the demo shows it took only 15 minutes to create a blog.
+You've likely seen this old and famous [demo presentation](https://www.youtube.com/watch?v=Gzj723LkRJY) on how powerful and easy it is to build an app with Ruby on Rails. As the demo shows, it took only 15 minutes to create a blog.
 
 But what if I told you that Rails could also be used to quickly and easily create an API, using all available tools that the framework provides, the same security, the same generators, and most of all, the same agility and easy-to-understand language?
 
 Today we'll dive into Rails API mode and how it can be used to create powerful - yet simple - APIs for your back-end!
 
 ### What is an API?
-First of all, what _is an API?_, chances are that you've seen two definitions, so let us get this out of the way. API stands for _Application Programming Interface_ and is mostly used to describe accessible documentation of a framework, programming language, or service so a developer can learn, check or revisit any aspect of these tools, as an example we have the [GitHub API](https://docs.github.com/)(also referred and the GitHub Docs) or the [Rails API](https://api.rubyonrails.org/)(once again, also referred as the Rails Docs).
+First of all, what _is an API?_ Chances are that you've seen two definitions, so let us get this out of the way. API stands for _Application Programming Interface_ and is mostly used to describe accessible documentation of a framework, programming language, or service so a developer can learn, check or revisit any aspect of these tools, as an example we have the [GitHub API](https://docs.github.com/)(also referred and the GitHub Docs) or the [Rails API](https://api.rubyonrails.org/)(once again, also referred as the Rails Docs).
 
-Although we can understand API as thorough documentation of a tool, we can also find public and private APIs that are applications that consume static resources via other applications or HTTP client calls, it is a way for one system to interact with other external systems, that means that there are application out there that we access differently from the "common way" of interacting with a system with generated HTML that we click and bop, these APIs are usually accessed using direct HTTP calls, usually consuming a JSON resource.
+Although we can understand API as thorough documentation of a tool, we can also find public and private APIs that are applications that consume static resources via other applications or HTTP client calls. It is a way for one system to interact with other external systems, which means that there are applications out there that we access differently from the "common way" of interacting with a system with generated HTML that we click and bop, these APIs are usually accessed using direct HTTP calls, usually consuming a JSON resource.
 
-To summarize, instead of generating a page to be interacted with through forms, links and views the application can be communicated with exposed endpoints that provide information in a set static structure.
+To summarize, instead of generating a page to be interacted with through forms, links, and views, the application can be communicated with exposed endpoints that provide information in a set static structure.
 
-TL;DR:
 1. **Documentation**: Reference materials for frameworks or services (like the [GitHub API](https://docs.github.com/) or [Rails API](https://api.rubyonrails.org/))
 2. **Web Services**: Applications that provide structured data (typically JSON) through HTTP endpoints
 
 ### Why RoR for APIs?
-Rails was created following the [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) principles and it can be used to build both the front-end and back-end of a system, following this MVC architecture we can use Rails to have its views served as JSON resources, you'll develop focused on your models and controllers and serve the needed information to the outside world in a static pre-constructed structure, so no need to be in charge of creating a front-end or complex view, you'll only need to organize the structure that will be served, the application that will consume what you provide will do as they please with the JSON you created.
+Rails was created following the [Model-View-Controller (MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) principles and it can be used to build both the front-end and back-end of a system. Following this MVC architecture, we can use Rails to have its views served as JSON resources, you'll develop focused on your models and controllers and serve the needed information to the outside world in a static pre-constructed structure. So, there is no need to be in charge of creating a front-end or complex views: you'll only need to organize the structure that will be served and the application that will consume what you provide will do as it pleases with the JSON you created.
 
-This means you can keep the happy coding you already have for creating full-stack RoR applications while creating APIs, focusing mainly on controllers and models. Although there are simpler frameworks to create APIs using Ruby, RoR is a full-stack framework with a bunch of tools, wouldn't it be better to use something else? Well, _it depends_, as mentioned in the [Rails Guides](https://guides.rubyonrails.org/api_app.html#why-use-rails-for-json-apis-questionmark):
+This means you can keep the happy coding you already have for creating full-stack RoR applications while creating APIs, focusing mainly on controllers and models. Although there are simpler frameworks to create APIs using Ruby, RoR is a full-stack framework with a bunch of tools. Wouldn't it be better to use something else? Well, _it depends_, as mentioned in the [Rails Guides](https://guides.rubyonrails.org/api_app.html#why-use-rails-for-json-apis-questionmark):
 
->The first question a lot of people have when thinking about building a JSON API using Rails is: "Isn't using Rails to spit out some JSON overkill? Shouldn't I just use something like Sinatra?".
->
->For very simple APIs, this may be true. However, even in very HTML-heavy applications, most of an application's logic lives outside of the view layer.
->
->The reason most people use Rails is that it provides a set of defaults that allows developers to get up and running quickly, without having to make a lot of trivial decisions.
->
-><cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
+&gt;The first question a lot of people have when thinking about building a JSON API using Rails is: "Isn't using Rails to spit out some JSON overkill? Shouldn't I just use something like Sinatra?".
+&gt;
+&gt;For very simple APIs, this may be true. However, even in very HTML-heavy applications, most of an application's logic lives outside of the view layer.
+&gt;
+&gt;The reason most people use Rails is that it provides a set of defaults that allows developers to get up and running quickly, without having to make a lot of trivial decisions.
+&gt;
+&gt;<cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
 
 There you go, there is indeed an argument to be made about its usage, but we want all these **middleware defaults** including _development_ and _testing modes_, _rails logging_, _security_ against different kinds of attacks, and _parameters parsing_. We also want the **action pack layer** that includes _resourceful routing_, _generators_, _caching_, and access to all _rails gems_. You'll find the full list of features [here](https://guides.rubyonrails.org/api_app.html#why-use-rails-for-json-apis-questionmark)
 
@@ -39,8 +35,8 @@ Even though it all seems _too much_, a simple way of thinking is "Why _NOT_?", y
 > The short version is: that you may not have thought about which
 > parts of Rails are still applicable even if you remove the
 > view layer, but the answer turns out to be most of it.
->
-><cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
+&gt;
+&gt;<cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
 
 ### Differences between RoR and RoR --api
 There are three main differences between creating a common RoR app and a RoR app on API mode, as described in the Rails Guides:
@@ -51,7 +47,7 @@ There are three main differences between creating a common RoR app and a RoR app
 
 The middleware is now _leaner_, removing unnecessary features for API, like cookie support and so forth.
 
-[ActionController::API](https://api.rubyonrails.org/classes/ActionController/API.html) is a lightweight version of [ActionController::Base](https://api.rubyonrails.org/classes/ActionController/Base.html), it allows us to create controllers with just the features an API need, no overly "fancy" functionalities used in a normal Rails controller. In a nutshell, it does not have features that a browser requires, like layouts and template rendering, flash, assets, and cookies, but of course, you have the freedom to add them as needed.
+[ActionController::API](https://api.rubyonrails.org/classes/ActionController/API.html) is a lightweight version of [ActionController::Base](https://api.rubyonrails.org/classes/ActionController/Base.html), it allows us to create controllers with just the features an API needs, no overly "fancy" functionalities used in a normal Rails controller. In a nutshell, it does not have features that a browser requires, like layouts and template rendering, flash, assets, and cookies, but of course, you have the freedom to add them as needed.
 
 ```rb
 # Maybe you want cookies? Be free, cookie monster!
@@ -71,17 +67,17 @@ Here is a quick summary of these Middleware Stack changes for us visual learners
 
 Now, about **rendering and redirecting.**
 
-When rendering or redirecting there is a couple of things to keep in mind, we can freely choose to render, as an example using `render json: 'resource'`, but remember that since there are no templates, no implicit rendering will be made, so it is _necessary_ to either call `render` or `redirect_to`, of course, this applies to _vanilla_ rails without a gem to build JSON as we please, but let's first get the basic.
+When rendering or redirecting there is a couple of things to keep in mind, we can freely choose to render, as an example using `render json: 'resource'`, but remember that since there are no templates, no implicit rendering will be made, so it is _necessary_ to either call `render` or `redirect_to`. Of course, this applies to _vanilla_ rails without a gem to build JSON as we please, but let's first get the basics.
 
-Either way, we have some options on how to handle the end of action, for rendering we can form a structure similar to how we see them in regular rails, just explicitly told what to do afterward.
+Either way, we have some options on how to handle the end of action. For rendering, we can form a structure similar to how we see them in regular rails, just explicitly told what to do afterward.
 
 ```rb
 def show
   @order = Order.find(params[:id]) # Normally we would stop here
-  render json: @order # Added a render option with an variable
+  render json: @order # Added a render option with a variable
 end
 ```
-There are, of course, more options than just JSON, but that's what you will usually deal with, but in case you are curious...
+There are, of course, more options than just JSON, but that's what you will usually deal with. However, in case you are curious...
 ```rb
 # A whole round of rendering for render lovers
 render json: @order                    # JSON response
@@ -89,7 +85,7 @@ render xml: @order                     # XML response
 render plain: "Success"                # Plain text
 render status: :no_content             # Header-only response
 ```
-When talking about redirect, in API mode `redirects` are used to move from one action to another, so you can use almost them the same way as it is present in ActionController::Base, e.g:
+When talking about redirect, in API mode `redirects` are used to move from one action to another, so you can use them almost the same way as it is present in ActionController::Base, e.g:
 ```rb
 def show
   redirect_to create_order_url and return if order_not_created?
@@ -102,7 +98,7 @@ end
 * There is no implicit rendering! (Kind of)
   * Won't automagically look for *app/views/controller/action.html.erb*
   * Unless.. You use the JBuilder gem, which we will!
-* Status code matters a bit more, since as an API this info is usually needed
+* Status code matters a bit more since as an API this info is usually needed
   * ```rb
       redirect_to url, status: :see_other           # 303
       redirect_to url, status: :moved_permanently   # 301
@@ -165,7 +161,7 @@ First, we create the rails app using the `new` command and passing the `--api` f
 ```bash
  $ rails new pocket_miner_42 --api
 ```
-To create a new resource we do it the same as always, we'll create a Miner with name and level and Rare Gems that belong to Miner, with name and color.
+To create a new resource, we do the same as always: we'll create a Miner with name, level, and Rare Gems that belong to said Miner, with name and color.
 ```bash
  $ rails generate scaffold Miner name:string level:integer
  $ rails generate scaffold RareGem name:string color:string miner:references
@@ -284,7 +280,7 @@ end
 ```
 With this, we have a functioning REST API, _Easy as Sunday morning_.
 
-We can do as we please, maybe create a service object to input some decision on how the Miners get their Rare Gems, create transactions and contracts for a stronger business/miner logic, just as you would in a normal rails app, the backend will work the same, the main difference here is how the data is passed to the end user.
+We can do as we please, maybe create a service object to input some decision on how the Miners get their Rare Gems and create transactions and contracts for a stronger business/miner logic, just as you would in a normal rails app. The backend will work the same, the main difference here is how the data is passed to the end user.
 
 ### JSON, Serializing and JBuilder
 Given we will mainly use JSON, what does it look like on a typical GET call on the API endpoint? After creating some Miners and Gems we have:
@@ -313,17 +309,17 @@ Given we will mainly use JSON, what does it look like on a typical GET call on t
 	}
 ]
 ```
-Pretty cool, all working just fine! But wait... I don't remember setting up this format of return or even the info I want to display, well.. Rails automagically gets the instance variable we created `miners` and serializes the info into an organized JSON with all their info, which is good, but what if we want to display only the names and levels? And what if we wanted to show the rare gems they have? Here we can use [JBuilder](https://github.com/rails/jbuilder) gem to serialize what we want using a comprehensive DSL, it is an official and maintained gem maintained by the Rails team!
+Pretty cool, all working just fine! But wait... I don't remember setting up this format of return or even the info I want to display. Well... Rails automatically gets the instance variable we created `miners` and serializes the data into an organized JSON with all their information, which is good. But what if we want to display only the names and levels? And what if we wanted to show the rare gems they have? Here we can use [JBuilder](https://github.com/rails/jbuilder) gem to serialize what we want using a comprehensive DSL. It is an official gem maintained by the Rails team!
 
-**When using JBuilder, you DON'T need to explicitly render the JSON, just create the views as you would in a common rails app, so go to your controller and remove the rendering on actions and places where there is a correspondent view!**
+**When using JBuilder, you DON'T need to explicitly render the JSON, just create the views as you would in a common rails app. So go to your controller and remove the rendering on actions and places where there is a correspondent view!**
 
-As of Rails 8 it should come in your gemfile as a commented line, just uncomment it and do a bundle install.
+As of Rails 8, it should come in your gemfile as a commented line, just uncomment it and do a bundle install.
 ```rb
 # gemfile.rb
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 ```
-Now we can create the equivalent of our views, but in a `.json.jbuilder` format.
+Now we can create the equivalent of our views but in a `.json.jbuilder` format.
 
 ```rb
 # app/views/miners/index.json.jbuilder
@@ -427,7 +423,7 @@ Through our small example, we've seen how Rails API mode provides:
 The next time you need to build an API, ask yourself: "Would I enjoy rebuilding Rails' features from scratch?" If the answer is no (and it usually is), Rails API mode may probably be a good idea.
 
 ___
-Photo by <a href="https://unsplash.com/pt-br/@trapnation?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Andre Benz</a> on <a href="https://unsplash.com/pt-br/fotografias/fotografia-de-ferrovia-durante-a-noite-JnB8Gio4GZo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+Photo by <a href="https://unsplash.com/pt-br/@trapnation?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Andre Benz</a> on <a href="https://unsplash.com/pt-br/fotografias/fotografia-de-ferrovia-durante-a-noite-JnB8Gio4GZo?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>
 ---
 
 #### Previously: [Web Development with Ruby on Rails](https://blog.codeminer42.com/web-development-with-ruby-on-rails/)
