@@ -311,7 +311,28 @@ Given we will mainly use JSON, what does it look like on a typical GET call on t
 	}
 ]
 ```
-Pretty cool, all working just fine! But wait... I don't remember setting up this format of return or even the info I want to display. Well... Rails automatically gets the instance variable we created `miners` and serializes the data into an organized JSON with all their information, which is good. But what if we want to display only the names and levels? And what if we wanted to show the rare gems they have? Here we can use [JBuilder](https://github.com/rails/jbuilder) gem to serialize what we want using a comprehensive DSL. It is an official gem maintained by the Rails team!
+Pretty cool, all working just fine! But wait... I don't remember setting up this format of return or even the info I want to display. Well... Rails automatically gets the instance variable we created `miners` and serializes the data into an organized JSON with all their information, which is good. But what if we want to display only the names and levels? And what if we wanted to show the rare gems they have? Here we can use [JBuilder](https://github.com/rails/jbuilder) gem to serialize what we want! It is an official gem maintained by the Rails team!
+
+JBuilder’s domain-specific language (DSL) uses Ruby code to construct JSON. Every `json.key value` declaration that we will use (you see below) explicitly defines your API’s output structure, it can be simple attributes (`json.level miner.level`), complex nested relationships (like the `rare_gems` association), or even computed values like the following examples:
+```rb
+json.miner do
+  json.name @miner.name
+  json.level @miner.level
+  
+  # Computed status based on level
+  json.status @miner.level > 80 ? "Expert" : "Apprentice"
+  
+  # Formatted timestamp
+  json.last_active @miner.updated_at.to_fs(:rfc822)
+  
+  # You can compute associated values!
+  json.gem_stats do
+    json.total_gems @miner.rare_gems.size
+    json.most_common_color @miner.rare_gems.group(:color).count.max_by(&:last)&.first
+  end
+end
+```
+The left-hand side becomes the JSON key, while the right-hand side evaluates as the value, giving you control over what your API sends. You can use camelCase keys, conditional attributes and so forth, JBuilder handles it all through its interface, this lets you craft responses that match your domain model with more much more precision then an auto-serialization
 
 **When using JBuilder, you DON'T need to explicitly render the JSON, just create the views as you would in a common rails app. So go to your controller and remove the rendering on actions and places where there is a correspondent view!**
 
@@ -413,6 +434,118 @@ In their controller actions:
   end
 ```
 See that I included the rare gems on the call? Well, the JSON view will iterate each Miner on @miners and that could cause some serious N+1 Query issues, so always bear that in mind!
+
+Of course, this is a straightforward use, it can be much more complex and useful if you want and need! Just like ERB templates for HTML, JBuilder supports partials and layouts to keep your JSON views DRYer. You can extract shared structures (for example, a miner’s base attributes) into `_miner.json.jbuilder` partials, then reuse them with `json.partial!` across endpoints, just as you’d render partials in traditional Rails views. This is indeed really convenient for maintaining consistency across index/show endpoints or versioned APIs. Combined with Rails’ conventional file lookup (automagically using `show.json.jbuilder` for `GET /miners/1`), you get a clean separation of concerns without sacrificing flexibility.
+
+Now that we have this new tool in our toobox let's improve our views!
+
+First, create new partials!
+```rb
+# app/views/miners/_miner.json.jbuilder
+
+# I'll even add the previous computed values
+json.name miner.name
+json.level miner.level
+json.status miner.level > 80 ? "Expert" : "Apprentice"
+json.rare_gems_count miner.rare_gems.size
+```
+```rb
+# app/views/gems/_gem.json.jbuilder
+json.name gem.name
+json.color gem.color
+```
+
+Using the partials in our already created index and show views:
+```rb
+# app/views/miners/index.json.jbuilder
+json.miners @miners do |miner|
+  json.partial! 'miners/miner', miner: miner # Just pass the object to the partial
+  json.rare_gems miner.rare_gems do |gem|
+    json.partial! 'gems/gem', gem: gem
+  end
+end
+```
+```rb
+# app/views/miners/show.json.jbuilder
+json.miner do
+  json.partial! 'miners/miner', miner: @miner
+  
+  json.created_at @miner.created_at.to_fs(:iso8601)
+  json.updated_at @miner.updated_at.to_fs(:iso8601)
+
+  json.rare_gems @miner.rare_gems do |gem|
+    json.partial! 'gems/gem', gem: gem
+  end
+end
+```
+
+As for the generated JSON in a GET index call:
+```json
+{
+  "miners": [
+    {
+      "name": "Mineirinho",
+      "level": 99,
+      "status": "Expert",
+      "rare_gems_count": 3,
+      "rare_gems": [
+        {
+          "id": 1,
+          "name": "Ruby",
+          "color": "Red"
+        },
+        {
+          "id": 2,
+          "name": "Diamond",
+          "color": "White"
+        }
+      ]
+    },
+    {
+      "name": "Marvin",
+      "level": 77,
+      "status": "Apprentice",
+      "rare_gems_count": 2,
+      "rare_gems": [
+        {
+          "name": "Sapphire",
+          "color": "Blue"
+        }
+      ]
+    }
+  ]
+}
+```
+
+and in a GET show call:
+```json
+{
+  "miner": {
+    "name": "Mineirinho",
+    "level": 99,
+    "status": "Expert",
+    "rare_gems_count": 3,
+    "created_at": "2025-06-05T13:19:30Z",
+    "updated_at": "2025-06-05T13:19:30Z",
+    "rare_gems": [
+      {
+        "name": "Ruby",
+        "color": "Red"
+      },
+      {
+        "name": "Diamond",
+        "color": "White"
+      },
+      {
+        "name": "Emerald",
+        "color": "Green"
+      }
+    ]
+  }
+}
+```
+
+Check more possibilies for JBuilder views in their [documentation](https://github.com/rails/jbuilder)!
 
 ### Conclusion: Rails for APIs - A good fit?
 Through our small example, we've seen how Rails API mode provides:
