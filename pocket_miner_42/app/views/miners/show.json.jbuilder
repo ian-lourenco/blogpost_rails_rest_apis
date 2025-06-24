@@ -1,10 +1,10 @@
 json.miner do
-  json.name @miner.name
-  json.level @miner.level
-  json.rare_gems @miner.rare_gems do |rare_gem|
-    json.name rare_gem.name
-    json.color rare_gem.color
+  json.partial! 'miners/miner', miner: @miner
+
+  json.created_at @miner.created_at.to_fs(:iso8601)
+  json.updated_at @miner.updated_at.to_fs(:iso8601)
+
+  json.rare_gems @miner.rare_gems do |gem|
+    json.partial! 'gems/gem', gem: gem
   end
-  json.created_at @miner.created_at.iso8601
-  json.updated_at @miner.updated_at.iso8601
 end

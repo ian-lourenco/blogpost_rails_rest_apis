@@ -1,8 +1,6 @@
 json.miners @miners do |miner|
-  json.name miner.name
-  json.level miner.level
-  json.rare_gems miner.rare_gems do |rare_gem|
-    json.name rare_gem.name
-    json.color rare_gem.color
+  json.partial! 'miners/miner', miner: miner
+  json.rare_gems miner.rare_gems do |gem|
+    json.partial! 'gems/gem', gem: gem
   end
 end
