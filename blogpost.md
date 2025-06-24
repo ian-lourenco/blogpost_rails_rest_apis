@@ -20,15 +20,17 @@ Rails was created following the [Model-View-Controller (MVC)](https://en.wikiped
 
 This means you can keep the happy coding you already have for creating full-stack RoR applications while creating APIs, focusing mainly on controllers and models. Although there are simpler frameworks to create APIs using Ruby, RoR is a full-stack framework with a bunch of tools. Wouldn't it be better to use something else? Well, _it depends_, as mentioned in the [Rails Guides](https://guides.rubyonrails.org/api_app.html#why-use-rails-for-json-apis-questionmark):
 
-&gt;The first question a lot of people have when thinking about building a JSON API using Rails is: "Isn't using Rails to spit out some JSON overkill? Shouldn't I just use something like Sinatra?".
-&gt;
-&gt;For very simple APIs, this may be true. However, even in very HTML-heavy applications, most of an application's logic lives outside of the view layer.
-&gt;
-&gt;The reason most people use Rails is that it provides a set of defaults that allows developers to get up and running quickly, without having to make a lot of trivial decisions.
-&gt;
-&gt;<cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
+>The first question a lot of people have when thinking about building a JSON API using Rails is: "Isn't using Rails to spit out some JSON overkill? Shouldn't I just use something like Sinatra?".
+>
+>For very simple APIs, this may be true. However, even in very HTML-heavy applications, most of an application's logic lives outside of the view layer.
+>
+>The reason most people use Rails is that it provides a set of defaults that allows developers to get up and running quickly, without having to make a lot of trivial decisions.
+>
+><cite>Rails Guides, Why Use Rails for JSON APIs?</cite>
 
-There you go, there is indeed an argument to be made about its usage, but we want all these **middleware defaults** including _development_ and _testing modes_, _rails logging_, _security_ against different kinds of attacks, and _parameters parsing_. We also want the **action pack layer** that includes _resourceful routing_, _generators_, _caching_, and access to all _rails gems_. You'll find the full list of features [here](https://guides.rubyonrails.org/api_app.html#why-use-rails-for-json-apis-questionmark)
+Given these reasons, there is another major point: _**Active Record**_, Rails built-in Object-Relational Mapping (ORM) layer. In a nutshell, Active Record simplifies the database interaction by allowing you to work with database records as Ruby objects, in addition it give us intuitive query methods, associations, validation, callbacks, all in order to make it an abstraction that rails developers can easily use (it basically gives you super power). This means that, when building an API with Rails/Active Record, you can focus on creating efficient data stricutures without the need for verbose SQL or boilerplate logic. Features like eager loading, transactions and migrations are all included by default or bia semantic methods that are easy to access and use, this also means that the convention-over-configuration approach keeps all data consistent and maintanable even on Rails API-mode! 
+
+There you go, there is indeed an argument to be made about its usage, but we want all these **middleware defaults** including _development_ and _testing modes_, _rails logging_, _security_ against different kinds of attacks, and _parameters parsing_. We also want the **action pack layer** that includes _resourceful routing_, _generators_, _ORM_, _caching_, and access to all _rails gems_. You'll find the full list of features [here](https://guides.rubyonrails.org/api_app.html#why-use-rails-for-json-apis-questionmark)
 
 Even though it all seems _too much_, a simple way of thinking is "Why _NOT_?", you already know the **_Rails Way™_** and it can be extended to this new way of building, making it a new tool in your developer toolbox.
 
